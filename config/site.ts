@@ -1,5 +1,5 @@
 import { NavElements, NavItems } from '@/types/nav'
-import { HomeIcon } from '@/components/icons/AppIcons'
+import { HomeIcon, MobileIcon } from '@/components/icons/AppIcons'
 
 export type SiteConfig = typeof siteConfig
 
@@ -35,5 +35,10 @@ export const SiteNavElements: NavElements[] = [
   {
     name: 'D3 Test',
     url: '/d3'
+  },
+  {
+    name: 'Mobile Page',
+    url: '/mobile',
+    icon: MobileIcon
   }
 ]

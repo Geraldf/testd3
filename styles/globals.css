@@ -47,4 +47,7 @@
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
   }
+  .hover_card {
+    box-shadow: 0px 4px 4px 0px rgba(174, 174, 174, 0.25);
+  }
 }

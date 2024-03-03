@@ -7,11 +7,13 @@ type Props = {
   data: FlareData
 }
 
-type LocalRoot<T> = d3.HierarchyPointNode<T> & {
+export type LocalRoot<T> = d3.HierarchyNode<T> & {
+  x?: number
+  y?: number
   x0?: number
   y0?: number
   _children?: LocalRoot<T>[]
-  id?: number | string
+  id?:  string
 }
 
 export default function Test(props: Props) {
@@ -19,7 +21,7 @@ export default function Test(props: Props) {
 
   const svgReg = React.useRef<SVGSVGElement>(null)
 
-  const root: d3.HierarchyNode<FlareData> = d3.hierarchy(data)
+  const root: LocalRoot<FlareData> = d3.hierarchy(data)
   const width = 928
 
   // Compute the tree height; this approach will allow the height of the
@@ -31,30 +33,15 @@ export default function Test(props: Props) {
   var r: LocalRoot<FlareData> = tree(root)
   r.x0 = dy / 2
   r.y0 = 0
-  r.descendants().forEach((d, i: number) => {
-    d.id = i
+  r.descendants().forEach((d:LocalRoot<FlareData>, i: number) => {
+    d.id = i.toString()
     d._children = d.children
-    if (d.depth && d.data.name.length !== 7) d.children = null
+    if (d.depth && d.data.name.length !== 7) d.children = undefined
   })
   r = tree(root)
   var linkGen = d3.linkHorizontal();
 
-  const update = source => {
-    const nodes = root.descendants().reverse()
-    const links = root.links()
-    tree(root)
-    let left = root
-    let right = root
-    root.eachBefore(node => {
-      if (node.x < left.x) left = node
-      if (node.x > right.x) right = node
-    })
-    const height = right.x - left.x + marginTop + marginBottom
-    root.eachBefore(d => {
-      d.x0 = d.x
-      d.y0 = d.y
-    })
-  }
+  
   useEffect(() => {
     // Create a tree layout.
   }, [])

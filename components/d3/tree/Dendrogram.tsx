@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import * as d3 from 'd3'
 import { FlareData } from '@/app/d3/flare'
 
+
 const MARGIN = { top: 10, right: 10, bottom: 10, left: 10 }
 
 type DendrogramProps = {
@@ -17,7 +18,7 @@ export const Dendrogram = ({ width, height, data }: DendrogramProps) => {
   const boundsHeight = height - MARGIN.top - MARGIN.bottom
 
   const hierarchy = useMemo(() => {
-    return d3.hierarchy(data).sum(d => d.value)
+    return d3.hierarchy(data).sum(d => d.value!)
   }, [data])
 
   const onCLick = (node: d3.HierarchyNode<FlareData>) => {
@@ -37,8 +38,8 @@ export const Dendrogram = ({ width, height, data }: DendrogramProps) => {
     return (
       <g key={node.id}>
         <circle
-          cx={node.y}
-          cy={node.x}
+          //cx={node.y}
+          //cy={node.x}
           r={5}
           stroke='transparent'
           fill={'#69b3a2'}
@@ -47,8 +48,8 @@ export const Dendrogram = ({ width, height, data }: DendrogramProps) => {
 
         <text
           //x={node.y - 10}
-          x={node.children ? node.y - 10 : node.y + 10}
-          y={node.x}
+          x={node.children ?  - 10 :  + 10}
+          //y={node.x}
           fontSize={12}
           textAnchor={node.children ? 'end' : 'start'}
           alignmentBaseline='middle'
@@ -56,6 +57,16 @@ export const Dendrogram = ({ width, height, data }: DendrogramProps) => {
         >
           {node.data.name}
         </text>
+        <animateTransform
+        attributeName='transform'
+        begin='0s'
+        dur='0.5s'
+        type='translate'
+        from='0 0'
+        to={`${node.y} ${node.x}`}
+        fill='freeze'
+      />
+        
       </g>
     )
   })
@@ -67,6 +78,7 @@ export const Dendrogram = ({ width, height, data }: DendrogramProps) => {
       return
     }
     return (
+      
       <path
         key={node.id}
         fill='none'
@@ -74,8 +86,10 @@ export const Dendrogram = ({ width, height, data }: DendrogramProps) => {
         d={horizontalLinkGenerator({
           source: [node.parent.y, node.parent.x],
           target: [node.y, node.x]
-        })}
+        })!}
+        
       />
+    
     )
   })
 

@@ -3,6 +3,7 @@ export type FlareData = {
     value?: number;
     color?: string;
     children?: FlareData[];
+  
   }
 
 export const data:FlareData = {

@@ -1,6 +1,8 @@
 import { FlareData } from '@/app/d3/flare'
 import { CirclesAndText } from '@/components/SVG/SVGCircleAndText'
 import React from 'react'
+import { LocalRoot } from './Test'
+
 
 // export interface D3NodeData<T> {
 //   name: string
@@ -11,7 +13,8 @@ type D3NodeData<T> = {
   name: string
   children: D3NodeData<T>[]
 }
-export interface D3Node<T> {
+
+type NodeInfo<T> = {
   data: D3NodeData<T>
   height: number
   depth: number
@@ -19,6 +22,9 @@ export interface D3Node<T> {
   children: D3Node<T>[]
   x: number
   y: number
+}
+export interface D3Node<T> {
+  node?: LocalRoot<T>
 }
 
 export default function RunRoot(props: D3Node<FlareData>) {
@@ -32,8 +38,8 @@ export default function RunRoot(props: D3Node<FlareData>) {
  
   return (
     <>
-      <CirclesAndText x={node.x} y={node.y} t={node.data.name} />
-      {node.children && node.children.map((c, i) => <RunRoot key={i} node={c} />)}
+      <CirclesAndText x={node.x} y={node.y!} t={node.data.name} />
+      {node.children && node.children.map((c:LocalRoot<FlareData>, i: number) => <RunRoot key={i} node={c} />)}
       
     </>
   )

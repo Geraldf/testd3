@@ -41,7 +41,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <ThemeProvider attribute='class' defaultTheme='system' enableSystem>
             <div className='top-0  z-50 flex bg-gray-200 p-1'>
               <SidebarDemo N_Elements={SiteNavElements} />
-              <div className=' h-[calc(100vh-2.8rem)] flex-1 overflow-y-auto p-2 pl-5 '>
+              <div className=' h-[calc(100vh-2.8rem)] flex-1 overflow-y-auto p-2 pl-5  bg-white rounded-lg'>
                 {children}
               </div>
             </div>
