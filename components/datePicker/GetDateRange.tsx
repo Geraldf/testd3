@@ -8,28 +8,19 @@ import { MonthPicker } from '@/components/datePicker/MonthPicker'
 import { addDays } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
-type Props = {}
+type Props = {
+  SetDateRange: React.Dispatch<React.SetStateAction<DateRange | undefined>>
+}
 
-export default function GetDateRange({}: Props) {
+export default function GetDateRange(props: Props) {
+  const { SetDateRange } = props
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(),
     to: addDays(new Date(), 20)
   })
 
-  const SetStartDate = (startdate: any) => {
-    if (startdate) {
-      setDate({ from: startdate, to: date?.to })
-    }
-  }
-
-  const SetEndDate = (enddate: any) => {
-    if (enddate) {
-      setDate({ from: date?.from, to: enddate })
-    }
-  }
-
   React.useEffect(() => {
-    console.log(date)
+    SetDateRange(date)
   }, [date])
 
   return (
