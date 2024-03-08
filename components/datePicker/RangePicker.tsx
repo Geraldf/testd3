@@ -49,12 +49,12 @@ export const RangePicker = (props: Props) => {
         <DatePicker
           prompt='Start Datum'
           SetNewDate={sfdate}
-          date={date?.from}
+          date={initialStartValue}
         />
       </div>
       <div className='flex flex-col space-y-1.5'>
         <Label className='text-foreground'>bis:</Label>
-        <DatePicker prompt='End Datum' SetNewDate={stdate} date={date?.to} />
+        <DatePicker prompt='End Datum' SetNewDate={stdate} date={initialEndValue} />
       </div>
     </div>
   )

@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/popover'
 import { PopoverClose } from '@radix-ui/react-popover'
 import { CloseIcon } from '../icons/AppIcons'
+import { useState } from 'react'
 
 type Props = {
   prompt?: string
@@ -25,9 +26,10 @@ type Props = {
 export function DatePicker(props: Props) {
   const { prompt, date, SetNewDate } = props
   //const [date, setDate] = React.useState<Date>()
+  const [calendarOpen, setCalendarOpen] = useState(false);
 
   return (
-    <Popover>
+    <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={'outline'}
@@ -45,15 +47,19 @@ export function DatePicker(props: Props) {
         </Button>
       </PopoverTrigger>
       <PopoverContent className='w-auto p-0'>
-        <PopoverClose>
+       
           <Calendar
             mode='single'
             selected={date}
-            onSelect={SetNewDate}
+            onSelect={(d) => {
+              SetNewDate(d);
+              setCalendarOpen(false);
+              
+            }}
             initialFocus
             locale={de}
           />
-        </PopoverClose>
+       
       </PopoverContent>
     </Popover>
   )
