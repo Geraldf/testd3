@@ -5,7 +5,7 @@ import { CardContent } from '@/components/ui/card'
 import { CardTitle } from '@/components/ui/card'
 import { RangePicker } from '@/components/datePicker/RangePicker'
 import { MonthPicker } from '@/components/datePicker/MonthPicker'
-import { addDays } from 'date-fns'
+import { addDays, intervalToDuration } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
 type Props = {
@@ -25,16 +25,19 @@ export default function GetDateRange(props: Props) {
 
   return (
     <div className='flex flex-col gap-4'>
-      <Card className='w-min'>
-        <CardHeader className='flex flex-col  p-4'>
+      <Card>
+        <CardHeader className='flex flex-col  p-4 space-x-0'>
           <CardTitle>Selektiertes Datum</CardTitle>
         </CardHeader>
         <CardContent>
-          <RangePicker
-            initialStartValue={date?.from}
-            initialEndValue={date?.to}
-            SetDateRange={setDate}
-          />
+          <div className='flex flex-row w-min gap-3'>
+            <RangePicker
+              initialStartValue={date?.from}
+              initialEndValue={date?.to}
+              SetDateRange={setDate}
+            />
+            <div >Dauer: {intervalToDuration({ start: date.from!, end: date!.to! }).days} Tage</div>
+          </div>
         </CardContent>
       </Card>
       <Card className='w-min'>

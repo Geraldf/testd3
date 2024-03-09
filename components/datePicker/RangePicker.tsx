@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, use, useEffect } from 'react'
 import { Label } from '../ui/label'
 import { DatePicker } from './DatePicker'
-import { addDays } from 'date-fns'
+import { addDays, intervalToDuration } from 'date-fns'
 import { DateRange } from 'react-day-picker'
 
 type Props = {
@@ -16,6 +16,8 @@ export const RangePicker = (props: Props) => {
     from: initialStartValue || new Date(2022, 0, 20),
     to: initialEndValue || addDays(new Date(2022, 0, 20), 20)
   })
+
+  const [duration, setDuration] = React.useState<number>()
   React.useEffect(() => {
     SetDateRange(date)
   }, [date, setDate, SetDateRange])
@@ -35,10 +37,10 @@ export const RangePicker = (props: Props) => {
       if (SetNewDate < date?.from!) {
         setDate({ to: date?.from, from: SetNewDate })
       } else {
-        setDate({ from: date?.from, to: SetNewDate})
+        setDate({ from: date?.from, to: SetNewDate })
       }
+    }
   }
-}
 
   const setdate = (date: Dispatch<SetStateAction<Date | undefined>>) => {}
 
@@ -54,7 +56,11 @@ export const RangePicker = (props: Props) => {
       </div>
       <div className='flex flex-col space-y-1.5'>
         <Label className='text-foreground'>bis:</Label>
-        <DatePicker prompt='End Datum' SetNewDate={stdate} date={initialEndValue} />
+        <DatePicker
+          prompt='End Datum'
+          SetNewDate={stdate}
+          date={initialEndValue}
+        />
       </div>
     </div>
   )
